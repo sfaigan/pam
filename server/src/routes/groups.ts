@@ -5,6 +5,7 @@ const router = Router({ mergeParams: true });
 
 router.get("/:code", (req, res) => GroupsController.findByCode(req, res));
 router.post("/", (req, res) => GroupsController.create(req, res));
-router.put("/:id", (req, res) => GroupsController.update(req, res));
+router.put("/:code/rating", (req, res) => GroupsController.rate(req, res));
+router.put("/:code/join", (req, res) => GroupsController.join(req, res));
 
 export default router;
