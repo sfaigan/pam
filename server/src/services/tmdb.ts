@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Genre } from "../types";
+import { Genre, Movie, Person } from "../types";
 
 const URL = "https://api.themoviedb.org/3";
 
@@ -12,7 +12,7 @@ const findGenres = async (): Promise<Genre[]> => {
   return genres;
 };
 
-const findPeople = async (query: string, page = "1"): Promise<Genre[]> => {
+const findPeople = async (query: string, page = "1"): Promise<Person[]> => {
   const genres = await axios
     .get(
       `${URL}/search/person?api_key=${process.env.TMDB_API_KEY}&language=en-US&query=${query}&page=${page}`
@@ -21,7 +21,7 @@ const findPeople = async (query: string, page = "1"): Promise<Genre[]> => {
   return genres;
 };
 
-const findMovies = async (query: string, page = "1"): Promise<Genre[]> => {
+const findMovies = async (query: string, page = "1"): Promise<Movie[]> => {
   const movies = await axios
     .get(
       `${URL}/search/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&query=${query}&page=${page}`
@@ -30,12 +30,19 @@ const findMovies = async (query: string, page = "1"): Promise<Genre[]> => {
   return movies;
 };
 
+interface DiscoverMoviesResponse {
+  page: number;
+  results: Movie[];
+  total_pages: number;
+  total_results: number;
+}
+
 const discoverMovies = async (
   genres: string[],
   providers: string[],
   page = "1",
   region = "CA"
-): Promise<Genre[]> => {
+): Promise<DiscoverMoviesResponse> => {
   const genreQuery = encodeURIComponent(genres.join("|"));
   const providersQuery = encodeURIComponent(providers.join("|"));
   const movies = await axios

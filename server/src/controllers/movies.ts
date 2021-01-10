@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { TmdbService } from "../services/tmdb";
+import { retreiveMovies } from "../services/movie-retreiver";
 
 const find = async (req: Request, res: Response): Promise<void> => {
   const query = req?.query?.query?.toString() ?? "";
@@ -21,8 +22,7 @@ const discover = async (req: Request, res: Response): Promise<void> => {
   try {
     const genres = req?.query?.genres as string[];
     const providers = req?.query?.providers as string[];
-    const page = req?.query?.page?.toString() ?? "1";
-    const movies = await TmdbService.discoverMovies(genres, providers, page);
+    const movies = await retreiveMovies(genres, providers);
     res.send(movies);
   } catch (error) {
     console.error(error);
