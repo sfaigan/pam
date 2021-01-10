@@ -1,36 +1,42 @@
 import { Document, model, Schema } from "mongoose";
 import { CountryCode, StreamingService } from "../constants";
 
+export interface MovieDecision {
+  userId: string;
+  movieId: string;
+  like: boolean;
+}
+
 export interface GroupDoc extends Document {
-  count?: number;
   code: string;
-  movies?: Map<string, number>;
   genres: number[];
   providers: StreamingService[];
   region: CountryCode;
+  users?: string[];
+  movies?: MovieDecision[];
 }
 
 const GroupSchema = new Schema({
-  count: {
-    type: Number,
-    default: 1,
-  },
   code: String,
-  movies: {
-    type: Map,
-    of: Number,
-  },
-  genres: {
-    type: Array,
-    of: Number,
-  },
+  genres: [Number],
   providers: [
     {
       type: Number,
       enum: Object.values(StreamingService),
     },
   ],
-  region: String,
+  region: {
+    type: String,
+    enum: Object.values(CountryCode),
+  },
+  movies: [
+    {
+      userId: String,
+      movieId: String,
+      like: Boolean,
+    },
+  ],
+  users: [String],
 });
 
 export const Group = model<GroupDoc>("Group", GroupSchema);
