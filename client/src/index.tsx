@@ -1,14 +1,31 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import { LandingPage } from "./pages/landing";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { SignInPage } from "./pages/signin";
+
+export const App: React.FC = () => (
+  <div>
+    <Switch>
+      <Route path="/signin">
+        <SignInPage />
+      </Route>
+      <Route path="/">
+        <LandingPage />
+      </Route>
+    </Switch>
+  </div>
+);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -10,6 +10,8 @@ export interface UserDoc extends Document {
   password: string;
   name: string;
   countryCode: CountryCode;
+  faveGenres?: number[];
+  faveMovies?: number[];
   subscribedTo?: StreamingService[];
   friends?: Types.ObjectId[];
 }
@@ -25,6 +27,8 @@ const UserSchema = new Schema({
   },
   password: String,
   name: String,
+  faveGenres: [Number],
+  faveMovies: [Number],
   countryCode: {
     type: String,
     enum: Object.values(CountryCode),

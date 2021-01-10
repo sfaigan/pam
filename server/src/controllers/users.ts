@@ -72,6 +72,14 @@ const update = async (req: Request, res: Response): Promise<void> => {
     update["subscribedTo"] = req.body.subscribedTo;
   }
 
+  if ("faveGenres" in req.body) {
+    update["faveGenres"] = req.body.faveGenres.split(",");
+  }
+
+  if ("faveMovies" in req.body) {
+    update["faveMovies"] = req.body.faveMovies.split(",");
+  }
+
   if (Object.keys(update).length === 0) {
     res.sendStatus(400);
     return;
