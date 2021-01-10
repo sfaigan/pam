@@ -4,11 +4,11 @@
   "description": "",
   "scripts": {
     "client:prod": "echo \"Not yet implemented\" && exit 1",
-    "client:dev": "echo \"Not yet implemented\" && exit 1",
+    "client:dev": "cd client && npm run start",
     "server:prod": "cd server && npm run start",
     "server:dev": "cd server && npm run dev",
     "start": "echo \"Not yet implemented\" && exit 1",
-    "dev": "echo \"Not yet implemented\" && exit 1",
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
     "lint": "eslint \"**/src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint --fix \"**/src/**/*.{ts,tsx}\"",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -23,7 +23,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.3.0",
-    "eslint": "^6.6.0",
+    "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-flowtype": "^5.2.0",
     "eslint-plugin-import": "^2.22.1",
