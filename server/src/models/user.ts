@@ -1,5 +1,5 @@
 import { Document, model, Schema, Types } from "mongoose";
-import { StreamingService } from "../constants";
+import { CountryCode, StreamingService } from "../constants";
 
 // emailregex.com
 // eslint-disable-next-line no-control-regex
@@ -9,7 +9,7 @@ export interface UserDoc extends Document {
   email: string;
   password: string;
   name: string;
-  age: number;
+  countryCode: CountryCode;
   subscribedTo?: StreamingService[];
   friends?: Types.ObjectId[];
 }
@@ -25,7 +25,10 @@ const UserSchema = new Schema({
   },
   password: String,
   name: String,
-  age: Number,
+  countryCode: {
+    type: String,
+    enum: Object.values(CountryCode),
+  },
   subscribedTo: [
     {
       type: Number,
