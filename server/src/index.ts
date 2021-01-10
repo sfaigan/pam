@@ -33,6 +33,7 @@ connection.once("open", () => {
 
 app.use("/movies", moviesRouter);
 app.use("/genres", genresRouter);
+app.use("/groups", groupsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}...`);

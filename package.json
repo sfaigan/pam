@@ -12,7 +12,7 @@
     "lint": "eslint \"**/src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint --fix \"**/src/**/*.{ts,tsx}\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "setup": "echo \"Not yet implemented\" && exit 1"
+    "setup:users": "python3 seeds/generators/users.py && mongoimport --db \"pam\" --collection \"users\" --type json --file \"users.json\" --jsonArray --drop"
   },
   "repository": {
     "type": "git",
