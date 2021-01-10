@@ -1,15 +1,16 @@
-import { Document, model, Schema, Types } from "mongoose";
+import { Document, model, Schema } from "mongoose";
 
 export interface GroupDoc extends Document {
-  name: string;
-  owner: Types.ObjectId;
-  members: Types.ObjectId[];
+  code: string;
+  movies: Map<string, number>;
 }
 
 const GroupSchema = new Schema({
-  name: String,
-  owner: Schema.Types.ObjectId,
-  members: [Schema.Types.ObjectId],
+  code: String,
+  movies: {
+    type: Map,
+    of: Number,
+  },
 });
 
 export const Group = model<GroupDoc>("Group", GroupSchema);
