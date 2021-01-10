@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "client:prod": "cd client && npm run start",
+    "client:prod": "cd client && npm install && npm run start",
     "client:dev": "cd client && npm run start",
-    "server:prod": "cd server && npm run start",
+    "server:prod": "cd server && npm install && npm run start",
     "server:dev": "cd server && npm run dev",
     "start": "concurrently \"npm run server:prod\" \"npm run client:prod\"",
     "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
