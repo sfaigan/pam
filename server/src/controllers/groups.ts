@@ -59,25 +59,29 @@ const rate = async (req: Request, res: Response): Promise<void> => {
 
   try {
     let group = await Group.findOne({ code: code }).exec();
-    if (req?.body?.movie) {
-      if (group.movies.get(req?.body?.movie?.toString())) {
-        const count = group.movies.get(req?.body?.movie.toString()) + 1;
-        group.movies.set(req?.body?.movie?.toString(), count);
-      } else {
-        group.movies.set(req?.body?.movie?.toString(), 1);
-      }
+
+    if (validateRating(group, req?.body?.userId)) {
+      const rating = {
+        userId: req?.body?.userId,
+        movieId: req?.body?.movieId,
+        like: req?.body?.like,
+      };
+      group = await Group.findByIdAndUpdate(
+        group.id,
+        { $push: { movies: rating } },
+        { new: true }
+      );
     }
 
-    group = await Group.findByIdAndUpdate(
-      group.id,
-      { movies: group.movies },
-      { new: true }
-    );
     res.status(200).send(group);
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
   }
+};
+
+const validateRating = (group: GroupDoc, userId: string): boolean => {
+  return (userId && group.users?.includes(userId)) as boolean;
 };
 
 export const GroupsController = {
