@@ -3,12 +3,12 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-dotenv.config();
-
 import moviesRouter from "./routes/movies";
 import usersRouter from "./routes/users";
 import genresRouter from "./routes/genres";
 import peopleRouter from "./routes/people";
+
+dotenv.config();
 
 const PORT = process.env.SERVER_PORT || 3001;
 const DB_URI = process.env.DB_URI || "mongodb://127.0.0.1:27017/pam";

@@ -12,7 +12,6 @@ export interface IUser extends Document {
   age: number;
   subscribedTo?: StreamingService[];
   friends?: Types.ObjectId[];
-  groups?: Types.ObjectId[];
 }
 
 const UserSchema = new Schema({
@@ -34,7 +33,6 @@ const UserSchema = new Schema({
     },
   ],
   friends: [Schema.Types.ObjectId],
-  groups: [Schema.Types.ObjectId],
 });
 
 export const User = model<IUser>("User", UserSchema);
