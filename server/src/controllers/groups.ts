@@ -53,32 +53,32 @@ const join = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-// const rate = async (req: Request, res: Response): Promise<void> => {
-//   const code = req?.params?.code;
-//   console.log(`HTTP PUT /groups/${code}`);
+const rate = async (req: Request, res: Response): Promise<void> => {
+  const code = req?.params?.code;
+  console.log(`HTTP PUT /groups/${code}`);
 
-//   try {
-//     let group = await Group.findOne({ code: code }).exec();
-//     if (req?.body?.movie) {
-//       if (group.movies.get(req?.body?.movie?.toString())) {
-//         const count = group.movies.get(req?.body?.movie.toString()) + 1;
-//         group.movies.set(req?.body?.movie?.toString(), count);
-//       } else {
-//         group.movies.set(req?.body?.movie?.toString(), 1);
-//       }
-//     }
+  try {
+    let group = await Group.findOne({ code: code }).exec();
+    if (req?.body?.movie) {
+      if (group.movies.get(req?.body?.movie?.toString())) {
+        const count = group.movies.get(req?.body?.movie.toString()) + 1;
+        group.movies.set(req?.body?.movie?.toString(), count);
+      } else {
+        group.movies.set(req?.body?.movie?.toString(), 1);
+      }
+    }
 
-//     group = await Group.findByIdAndUpdate(
-//       group.id,
-//       { movies: group.movies },
-//       { new: true }
-//     );
-//     res.status(200).send(group);
-//   } catch (error) {
-//     console.error(error);
-//     res.sendStatus(500);
-//   }
-// };
+    group = await Group.findByIdAndUpdate(
+      group.id,
+      { movies: group.movies },
+      { new: true }
+    );
+    res.status(200).send(group);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
 
 export const GroupsController = {
   findByCode,
