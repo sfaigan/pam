@@ -14,7 +14,6 @@ const tryMovies = async (
       page.toString(),
       region
     );
-    console.log(response.results[0].id);
 
     return response.results;
   } catch (error) {
@@ -28,20 +27,21 @@ export const retreiveMovies = async (
   providers: string[],
   region = "CA"
 ): Promise<Movie[]> => {
-  const response = await TmdbService.discoverMovies(
+  const first_response = await TmdbService.discoverMovies(
     genres,
     providers,
     "1",
     region
   );
-  const total_pages = response.total_pages;
-  const movies = response.results;
+  const total_pages = first_response.total_pages;
 
   let page = 2;
+  const calls = [];
   while (page <= total_pages) {
-    movies.push(...(await tryMovies(genres, providers, "CA", page)));
+    calls.push(tryMovies(genres, providers, "CA", page));
     page = page + 1;
   }
+  const result = await Promise.all(calls);
 
-  return movies;
+  return first_response.results.concat(result.flat());
 };
