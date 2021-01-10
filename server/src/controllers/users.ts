@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { IUser, User } from "../models/user";
+import { UserDoc, User } from "../models/user";
 
 const findById = async (req: Request, res: Response): Promise<void> => {
   const id = req?.params?.id;
@@ -51,7 +51,7 @@ const update = async (req: Request, res: Response): Promise<void> => {
   const id = req?.params?.id;
   console.log(`HTTP PUT /users/${id}`);
 
-  const update: Partial<IUser> = {};
+  const update: Partial<UserDoc> = {};
   if ("email" in req.body) {
     update["email"] = req.body.email;
   }
