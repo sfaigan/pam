@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 
 import moviesRouter from "./routes/movies";
 import genresRouter from "./routes/genres";
+import groupsRouter from "./routes/groups";
 
 dotenv.config();
 
