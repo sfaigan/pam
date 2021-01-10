@@ -34,7 +34,7 @@ const create = async (req: Request, res: Response): Promise<void> => {
     email: req.body.email,
     password: req.body.password,
     name: req.body.name,
-    age: req.body.age,
+    countryCode: req.body.countryCode,
     subscribedTo: req.body.subscribedTo,
   });
 
@@ -64,8 +64,8 @@ const update = async (req: Request, res: Response): Promise<void> => {
     update["name"] = req.body.name;
   }
 
-  if ("age" in req.body) {
-    update["age"] = req.body.age;
+  if ("countryCode" in req.body) {
+    update["countryCode"] = req.body.countryCode;
   }
 
   if ("subscribedTo" in req.body) {
