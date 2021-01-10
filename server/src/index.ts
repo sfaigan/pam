@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+import moviesRouter from "./routes/movies";
 import usersRouter from "./routes/users";
 import genresRouter from "./routes/genres";
 import peopleRouter from "./routes/people";
@@ -32,6 +33,7 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
+app.use("/movies", moviesRouter);
 app.use("/people", peopleRouter);
 app.use("/users", usersRouter);
 app.use("/genres", genresRouter);

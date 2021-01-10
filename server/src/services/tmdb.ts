@@ -21,7 +21,17 @@ const findPeople = async (query: string, page = "1"): Promise<Genre[]> => {
   return genres;
 };
 
+const findMovies = async (query: string, page = "1"): Promise<Genre[]> => {
+  const genres = await axios
+    .get(
+      `${URL}/search/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&query=${query}&page=${page}`
+    )
+    .then((response) => response.data);
+  return genres;
+};
+
 export const TmdbService = {
   findGenres,
   findPeople,
+  findMovies,
 };
