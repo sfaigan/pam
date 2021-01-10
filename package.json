@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "client:prod": "echo \"Not yet implemented\" && exit 1",
+    "client:prod": "cd client && npm run start",
     "client:dev": "cd client && npm run start",
     "server:prod": "cd server && npm run start",
     "server:dev": "cd server && npm run dev",
-    "start": "echo \"Not yet implemented\" && exit 1",
+    "start": "concurrently \"npm run server:prod\" \"npm run client:prod\"",
     "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
     "lint": "eslint \"**/src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint --fix \"**/src/**/*.{ts,tsx}\"",
