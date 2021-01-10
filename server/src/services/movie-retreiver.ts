@@ -1,30 +1,46 @@
 import { TmdbService } from "./tmdb";
 import { Movie } from "../types";
 
+const tryMovies = async (
+  genres: string[],
+  providers: string[],
+  region = "CA",
+  page = 1
+): Promise<Movie[]> => {
+  try {
+    const response = await TmdbService.discoverMovies(
+      genres,
+      providers,
+      page.toString(),
+      region
+    );
+    console.log(response.results[0].id);
+
+    return response.results;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
 
 export const retreiveMovies = async (
   genres: string[],
   providers: string[],
   region = "CA"
 ): Promise<Movie[]> => {
-  let page = 1;
-  let total_pages = 1;
-  const movies = [];
-  // Optimize later
+  const response = await TmdbService.discoverMovies(
+    genres,
+    providers,
+    "1",
+    region
+  );
+  const total_pages = response.total_pages;
+  const movies = response.results;
+
+  let page = 2;
   while (page <= total_pages) {
-    try {
-      const response = await TmdbService.discoverMovies(
-        genres,
-        providers,
-        page.toString(),
-        region
-      );
-      total_pages = response.total_pages;
-      movies.push(...response.results);
-      page = page + 1;
-    } catch (error) {
-      console.log(error);
-    }
+    movies.push(...(await tryMovies(genres, providers, "CA", page)));
+    page = page + 1;
   }
 
   return movies;
