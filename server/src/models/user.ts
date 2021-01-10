@@ -1,5 +1,5 @@
 import { Document, model, Schema, Types } from "mongoose";
-import { StreamingService } from "../types";
+import { StreamingService } from "../constants";
 
 // emailregex.com
 // eslint-disable-next-line no-control-regex
@@ -29,7 +29,7 @@ const UserSchema = new Schema({
   age: Number,
   subscribedTo: [
     {
-      type: String,
+      type: Number,
       enum: Object.values(StreamingService),
     },
   ],
