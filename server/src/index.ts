@@ -7,6 +7,7 @@ dotenv.config();
 
 import usersRouter from "./routes/users";
 import genresRouter from "./routes/genres";
+import peopleRouter from "./routes/people";
 
 const PORT = process.env.SERVER_PORT || 3001;
 const DB_URI = process.env.DB_URI || "mongodb://127.0.0.1:27017/pam";
@@ -31,6 +32,7 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
+app.use("/people", peopleRouter);
 app.use("/users", usersRouter);
 app.use("/genres", genresRouter);
 
