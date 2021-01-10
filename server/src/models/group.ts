@@ -2,10 +2,10 @@ import { Document, model, Schema } from "mongoose";
 import { CountryCode, StreamingService } from "../constants";
 
 export interface GroupDoc extends Document {
-  count: number;
+  count?: number;
   code: string;
-  movies: Map<string, number>;
-  genre: number[];
+  movies?: Map<string, number>;
+  genres: number[];
   providers: StreamingService[];
   region: CountryCode;
 }
@@ -20,7 +20,7 @@ const GroupSchema = new Schema({
     type: Map,
     of: Number,
   },
-  genre: {
+  genres: {
     type: Array,
     of: Number,
   },
