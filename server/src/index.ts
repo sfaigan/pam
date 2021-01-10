@@ -7,6 +7,7 @@ import moviesRouter from "./routes/movies";
 import usersRouter from "./routes/users";
 import genresRouter from "./routes/genres";
 import peopleRouter from "./routes/people";
+import groupsRouter from "./routes/groups";
 
 dotenv.config();
 
@@ -37,6 +38,7 @@ app.use("/movies", moviesRouter);
 app.use("/people", peopleRouter);
 app.use("/users", usersRouter);
 app.use("/genres", genresRouter);
+app.use("/groups", groupsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}...`);
