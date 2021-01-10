@@ -30,7 +30,7 @@ const GroupSchema = new Schema({
       enum: Object.values(StreamingService),
     },
   ],
-  region: CountryCode,
+  region: String,
 });
 
 export const Group = model<GroupDoc>("Group", GroupSchema);

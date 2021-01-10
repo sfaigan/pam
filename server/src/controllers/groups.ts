@@ -1,38 +1,12 @@
 import { Request, Response } from "express";
 import { GroupDoc, Group } from "../models/group";
+import { nanoid } from "nanoid";
 
-const findById = async (req: Request, res: Response): Promise<void> => {
-  const id = req?.params?.id;
-  console.log(`HTTP GET /groups/${id}`);
-
+const findByCode = async (req: Request, res: Response): Promise<void> => {
   try {
-    const group = await Group.findById(id);
+    console.log(`HTTP GET /groups/:code`);
+    const group = await Group.findOne({ code: req?.params?.code }).exec();
     res.send(group);
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
-  }
-};
-
-const find = async (req: Request, res: Response): Promise<void> => {
-  console.log(`HTTP GET /groups/`);
-  // if (!("userId" in req.body)) {
-  //   res.sendStatus(403);
-  //   return;
-  // }
-  const userId = req.body.userId;
-
-  try {
-    let groups: GroupDoc[];
-    if (userId) {
-      const queryOptions = req.body.isOwner
-        ? { owner: userId }
-        : { users: { $in: [userId] } };
-      groups = await Group.find(queryOptions);
-    } else {
-      groups = await Group.find();
-    }
-    res.send(groups);
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
@@ -43,9 +17,11 @@ const create = async (req: Request, res: Response): Promise<void> => {
   console.log(`HTTP POST /groups/`);
 
   const group = new Group({
-    name: req.body.name,
-    owner: req.params.userId,
-    members: [req.params.userId],
+    code: nanoid(6),
+    movies: {},
+    genres: req.body.genres,
+    region: req.body.region,
+    providers: req.body.providers,
   });
 
   try {
@@ -58,31 +34,25 @@ const create = async (req: Request, res: Response): Promise<void> => {
 };
 
 const update = async (req: Request, res: Response): Promise<void> => {
-  const id = req?.params?.id;
-  console.log(`HTTP PUT /groups/${id}`);
-
-  const update: Partial<GroupDoc> = {};
-  if ("name" in req.body) {
-    update["name"] = req.body.name;
-  }
-
-  if ("owner" in req.body) {
-    update["owner"] = req.body.password;
-  }
-
-  if ("members" in req.body) {
-    update["members"] = req.body.members.split(",");
-  }
-
-  if (Object.keys(update).length === 0) {
-    res.sendStatus(400);
-    return;
-  }
-
-  const options = { new: true };
+  const code = req?.params?.code;
+  console.log(`HTTP PUT /groups/${code}`);
 
   try {
-    const group = await Group.findByIdAndUpdate(id, update, options);
+    let group = await Group.findOne({ code: code }).exec();
+    if (req?.body?.movie) {
+      if (group.movies.get(req?.body?.movie?.toString())) {
+        const count = group.movies.get(req?.body?.movie.toString()) + 1;
+        group.movies.set(req?.body?.movie?.toString(), count);
+      } else {
+        group.movies.set(req?.body?.movie?.toString(), 1);
+      }
+    }
+
+    group = await Group.findByIdAndUpdate(
+      group.id,
+      { movies: group.movies },
+      { new: true }
+    );
     res.status(200).send(group);
   } catch (error) {
     console.error(error);
@@ -90,23 +60,8 @@ const update = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-const remove = async (req: Request, res: Response): Promise<void> => {
-  const id = req?.params?.id;
-  console.log(`HTTP DELETE /groups/${id}`);
-
-  try {
-    await Group.findByIdAndDelete(id);
-    res.sendStatus(200);
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
-  }
-};
-
 export const GroupsController = {
-  findById,
-  find,
+  findByCode,
   create,
   update,
-  remove,
 };
