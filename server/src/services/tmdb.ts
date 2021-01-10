@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Genre, Movie, Person } from "../types";
+import { Genre, Movie } from "../types";
 
 const URL = "https://api.themoviedb.org/3";
 
@@ -10,24 +10,6 @@ const findGenres = async (): Promise<Genre[]> => {
     )
     .then((response) => response.data);
   return genres;
-};
-
-const findPeople = async (query: string, page = "1"): Promise<Person[]> => {
-  const genres = await axios
-    .get(
-      `${URL}/search/person?api_key=${process.env.TMDB_API_KEY}&language=en-US&query=${query}&page=${page}`
-    )
-    .then((response) => response.data);
-  return genres;
-};
-
-const findMovies = async (query: string, page = "1"): Promise<Movie[]> => {
-  const movies = await axios
-    .get(
-      `${URL}/search/movie?api_key=${process.env.TMDB_API_KEY}&language=en-US&query=${query}&page=${page}`
-    )
-    .then((response) => response.data);
-  return movies;
 };
 
 interface DiscoverMoviesResponse {
@@ -55,7 +37,5 @@ const discoverMovies = async (
 
 export const TmdbService = {
   findGenres,
-  findPeople,
-  findMovies,
   discoverMovies,
 };

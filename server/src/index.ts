@@ -4,9 +4,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 
 import moviesRouter from "./routes/movies";
-import usersRouter from "./routes/users";
 import genresRouter from "./routes/genres";
-import peopleRouter from "./routes/people";
 
 dotenv.config();
 
@@ -34,8 +32,6 @@ connection.once("open", () => {
 });
 
 app.use("/movies", moviesRouter);
-app.use("/people", peopleRouter);
-app.use("/users", usersRouter);
 app.use("/genres", genresRouter);
 
 app.listen(PORT, () => {
