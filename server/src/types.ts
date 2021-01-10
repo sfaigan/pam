@@ -4,3 +4,8 @@ export enum StreamingService {
   AMAZON_PRIME = "AMAZON_PRIME",
   CRAVE = "CRAVE",
 }
+
+export interface Genre {
+  id: number;
+  name: string;
+}
