@@ -1,5 +1,5 @@
 import { Document, model, Schema } from "mongoose";
-import { StreamingService } from "../constants";
+import { CountryCode, StreamingService } from "../constants";
 
 export interface GroupDoc extends Document {
   count: number;
@@ -7,6 +7,7 @@ export interface GroupDoc extends Document {
   movies: Map<string, number>;
   genre: number[];
   providers: StreamingService[];
+  region: CountryCode;
 }
 
 const GroupSchema = new Schema({
@@ -29,6 +30,7 @@ const GroupSchema = new Schema({
       enum: Object.values(StreamingService),
     },
   ],
+  region: CountryCode,
 });
 
 export const Group = model<GroupDoc>("Group", GroupSchema);
